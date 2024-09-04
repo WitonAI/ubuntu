@@ -49,10 +49,8 @@ jobs:
                 username: ${{ secrets.DOCKERHUB_USERNAME  }}
                 password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-
-
         -   name: Download Dockerfile
-            run: curl -o Dockerfile https://raw.githubusercontent.com/ENTNET/dockerfiles/latest/dockerfile.ubuntu
+            run: curl -o Dockerfile $DOCKER_FILE
 
         -   name: Build and export
             uses: docker/build-push-action@v5
