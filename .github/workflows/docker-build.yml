@@ -44,6 +44,7 @@ jobs:
         -   name: Download Dockerfile
             run: |
                 curl -s -o Dockerfile $DOCKER_FILE
+                ls -alh
 
         -   name: Set up QEMU
             uses: docker/setup-qemu-action@v3
