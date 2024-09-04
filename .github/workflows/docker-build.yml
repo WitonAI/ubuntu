@@ -7,7 +7,7 @@ on:
 env:
     DOCKER_BUILDKIT: 1
     DOCKER_BUILDKIT_INLINE_CACHE: 1
-    DOCKER_IMAGE_NAME: ${{ github.repository }}:${{ github.ref_name }}
+    DOCKER_IMAGE_NAME: ${{ github.repository }}
 
 jobs:
     check-dockerfile-exist:
