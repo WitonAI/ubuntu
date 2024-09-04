@@ -11,41 +11,9 @@ env:
     DOCKER_FILE: https://raw.githubusercontent.com/ENTNET/dockerfiles/latest/dockerfile.ubuntu
 
 jobs:
-    check-dockerfile-exist:
-        runs-on: ubuntu-latest
-        outputs:
-            dockerfile-exist: ${{ steps.dockerfile-exist-check.outputs.exist }}
-        steps:
-        -   name: Checkout sources
-            uses: actions/checkout@v4
-
-        -   name: Download Dockerfile
-            run: |
-                curl -s -o Dockerfile $DOCKER_FILE
-
-        -   name: Check Dockerfile exist
-            id: dockerfile-exist-check
-            shell: bash
-            run: |
-                if [[ -f Dockerfile ]]; then
-                    echo "exist=true" >> $GITHUB_OUTPUT;
-                else
-                    echo "exist=false" >> $GITHUB_OUTPUT;
-                fi
-
     docker-build:
         runs-on: ubuntu-latest
-        needs: [check-dockerfile-exist]
-        if: needs.check-dockerfile-exist.outputs.dockerfile-exist == 'true'
         steps:
-        -   name: Checkout sources
-            uses: actions/checkout@v4
-
-        -   name: Download Dockerfile
-            run: |
-                curl -s -o Dockerfile $DOCKER_FILE
-                ls -alh
-
         -   name: Set up QEMU
             uses: docker/setup-qemu-action@v3
 
@@ -95,3 +63,4 @@ jobs:
                 labels: ${{ steps.meta.outputs.labels }}
                 cache-from: type=gha
                 cache-to: type=gha,mode=max
+                dockerfile: ${{ env.DOCKER_FILE }}
