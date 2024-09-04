@@ -49,6 +49,11 @@ jobs:
                 username: ${{ secrets.DOCKERHUB_USERNAME  }}
                 password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+
+
+        -   name: Download Dockerfile
+            run: curl -o Dockerfile https://raw.githubusercontent.com/ENTNET/dockerfiles/latest/dockerfile.ubuntu
+
         -   name: Build and export
             uses: docker/build-push-action@v5
             with:
@@ -63,4 +68,4 @@ jobs:
                 labels: ${{ steps.meta.outputs.labels }}
                 cache-from: type=gha
                 cache-to: type=gha,mode=max
-                dockerfile: ${{ env.DOCKER_FILE }}
+                file: ${{ env.DOCKER_FILE }}
