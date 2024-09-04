@@ -8,6 +8,7 @@ env:
     DOCKER_BUILDKIT: 1
     DOCKER_BUILDKIT_INLINE_CACHE: 1
     DOCKER_IMAGE_NAME: ${{ github.repository }}
+    DOCKER_FILE: https://raw.githubusercontent.com/ENTNET/dockerfiles/latest/dockerfile.ubuntu
 
 jobs:
     check-dockerfile-exist:
@@ -20,7 +21,7 @@ jobs:
 
         -   name: Download Dockerfile
             run: |
-                curl -s -o Dockerfile https://raw.githubusercontent.com/ENTNET/dockerfiles/latest/dockerfile.ubuntu
+                curl -s -o Dockerfile $DOCKER_FILE
 
         -   name: Check Dockerfile exist
             id: dockerfile-exist-check
@@ -39,6 +40,10 @@ jobs:
         steps:
         -   name: Checkout sources
             uses: actions/checkout@v4
+
+        -   name: Download Dockerfile
+            run: |
+                curl -s -o Dockerfile $DOCKER_FILE
 
         -   name: Set up QEMU
             uses: docker/setup-qemu-action@v3
